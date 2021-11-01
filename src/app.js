@@ -29,46 +29,39 @@ var o_ctx = o_canvas.getContext('2d');
 var player2 = {x:0,y:0,sprite:guy_tile,flip:false,
     lastx:0,lasty:0, // position last frame
     w:8, h:8,
-    posx:0, posy:0, // position, in subpixels
+    posx:0, posy:0, // position, in pixels
     speedx:0, speedy:0, // speed, in subpixels
+    subx:0, suby:0,
     maxspeed:8, // also in subpixels
     onground:false, canjump:false,
     update: function () {
 
-            // save last frame's position
-            player2.lastx = player2.x; player2.lasty = player2.y;
-
-            // Topdown controls
-            //if (controls.isDown(controls.KEY_W)) {
-            //    player2.y--;
-            //}
-            //if (controls.isDown(controls.KEY_S)) {
-            //    player2.y++;
-            //}
-            //if (controls.isDown(controls.KEY_A)) {
-            //    player2.x--;
-            //}
-            //if (controls.isDown(controls.KEY_D)) {
-            //    player2.x++;
-            //}
-
             // Platformer controls
             if (controls.isDown(controls.KEY_A)) {
-                player2.speedx--;
+                player2.speedx -= 2;
             }
             if (controls.isDown(controls.KEY_D)) {
-                player2.speedx++;
+                player2.speedx += 2;
             }
-            // Move player based on speed
-            player2.x += player2.speedx;
-            player2.y += player2.speedy;
+
+            if (player2.canjump && controls.isDown(controls.KEY_SPACE) ) {
+                player2.speedy = -32;
+                player2.canjump = false;
+            } else if (player2.onground && !controls.isDown(controls.KEY_SPACE) ) {
+                player2.canjump = true;
+
+            }
+
             // Impose gravity
             player2.speedy++;
-            // Impose maximum speed
-            if (player2.speedy>2) {player2.speedy=2;}
-            if (player2.speedx>2) {player2.speedx=2;}
-            if (player2.speedx<-2) {player2.speedx=-2;}
 
+            // Impose friction
+            if (player2.speedx > 0) {player2.speedx--;}
+            else if (player2.speedx < 0) {player2.speedx++;}
+
+            // Move player
+            moveCharacter(player2);
+            
             // Check if the player collided with any soild tiles. 
             player2.onground = false;
             for (var i=0; i<geo.length; i++) {
@@ -83,28 +76,19 @@ var player2 = {x:0,y:0,sprite:guy_tile,flip:false,
                 player2.sprite = guy_tile_walk;
             }
 
-            if (player2.canjump && controls.isDown(controls.KEY_SPACE) ) {
-                player2.speedy = -8;
-                player2.canjump = false;
-            } else if (player2.onground && !controls.isDown(controls.KEY_SPACE) ) {
-                player2.canjump = true;
-
-            }
-
             // Switch the direction the player is facing depending on the direction button pressed. 
             if (controls.isDown(controls.KEY_A)) {player2.flip=true;}
             if (controls.isDown(controls.KEY_D)) {player2.flip=false;}
 
-            // Slow the player to a stop if they are not pressing left or right.
-            if (player2.speedx < 0 && !controls.isDown(controls.KEY_A) ) { player2.speedx++;}
-            if (player2.speedx > 0 && !controls.isDown(controls.KEY_D) ) { player2.speedx--;}
-        
             // if the sprite goes offscreen, wrap it to the other side
             if (player2.x < -8) {
                 player2.posx = FAKESCREEN.width*16;
             } else if (player2.x > FAKESCREEN.width) {
                 player2.posx = -TILESIZE*16;
             }
+
+            // reset if the sprite falls off
+            if (player2.y > 255) { player2.y = 0;}
         }
 };
 var frame_count = 0; 
@@ -219,7 +203,10 @@ function render() {
     //drawString(""+player2.x+","+player2.y,{x:0,y:0});
     //drawString("LURIDSORCERER",{x:32,y:32});
     //drawString("OFFLINE",{x:32+24,y:40})
-    drawString("PHYSICS!",{x:64,y:32});
+    //drawString("PHYSICS!",{x:64,y:32});
+    drawString("POS "+player2.x+" "+player2.y,{x:0,y:0});
+    drawString("SUBPX "+player2.subx+" "+player2.suby,{x:0,y:8});
+    drawString("SPEED "+player2.speedx+" "+player2.speedy,{x:0,y:16});
 
     // Show collision
     if (showcollision) {
