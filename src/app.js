@@ -44,12 +44,11 @@ var player2 = {x:0,y:0,sprite:guy_tile,flip:false,
                 player2.speedx += 2;
             }
 
-            if (player2.canjump && controls.isDown(controls.KEY_SPACE) ) {
+            if (player2.onground && player2.canjump && controls.isDown(controls.KEY_SPACE) ) {
                 player2.speedy = -32;
                 player2.canjump = false;
             } else if (player2.onground && !controls.isDown(controls.KEY_SPACE) ) {
                 player2.canjump = true;
-
             }
 
             // Impose gravity
