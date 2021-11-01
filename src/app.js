@@ -81,13 +81,13 @@ var player2 = {x:0,y:0,sprite:guy_tile,flip:false,
             if (controls.isDown(controls.KEY_D)) {player2.flip=false;}
 
             // if the sprite goes offscreen, wrap it to the other side
-            if (player2.x < -8) {
-                player2.posx = FAKESCREEN.width*16;
+            if (player2.x < -TILESIZE) {
+                player2.x = FAKESCREEN.width;
             } else if (player2.x > FAKESCREEN.width) {
-                player2.posx = -TILESIZE*16;
+                player2.x = -TILESIZE;
             }
 
-            // reset if the sprite falls off
+            // wrap to the top if the sprite falls off
             if (player2.y > 255) { player2.y = 0;}
         }
 };
