@@ -56,7 +56,7 @@ function moveCharacter(character) {
     // apply subpixel offset to absolute position
     // be sure to perform the correct rounding
     character.x += (character.subx > 0 ? Math.floor(character.subx / SUBPIXELS) : Math.ceil(character.subx / SUBPIXELS) );
-    character.y += (character.suby > 0 ? Math.floor(character.suby / SUBPIXELS) : Math.ceil(character.suby / SUBPIXELS) );
+    character.y += (character.suby > 0 ? Math.ceil(character.suby / SUBPIXELS) : Math.ceil(character.suby / SUBPIXELS) );
 
     // constrain subpixel values
     character.subx %= SUBPIXELS;

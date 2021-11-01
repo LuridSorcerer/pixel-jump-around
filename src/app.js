@@ -55,8 +55,10 @@ var player2 = {x:0,y:0,sprite:guy_tile,flip:false,
             player2.speedy++;
 
             // Impose friction
-            if (player2.speedx > 0) {player2.speedx--;}
-            else if (player2.speedx < 0) {player2.speedx++;}
+            if(this.onground) {
+                if (this.speedx > 0) {this.speedx--;}
+                else if (this.speedx < 0) {this.speedx++;}
+            }
 
             // Move player
             moveCharacter(player2);
@@ -200,6 +202,7 @@ function render() {
     drawString("POS   "+player2.x+" "+player2.y,{x:0,y:0});
     drawString("SUBPX "+player2.subx+" "+player2.suby,{x:0,y:8});
     drawString("SPEED "+player2.speedx+" "+player2.speedy,{x:0,y:16});
+    drawString("ONGROUND "+ (player2.onground ? 1 : 0), {x:0,y:24} );
 
     // Show collision
     if (showcollision) {
