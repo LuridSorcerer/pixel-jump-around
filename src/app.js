@@ -197,13 +197,7 @@ function render() {
     drawTile(player2.sprite,player2,player2.flip);
 
     // Draw some test text strings. 
-    //drawString("THE QUICK BROWN FOX JUMPS",{x:0,y:32});
-    //drawString("OVER THE LAZY DOG!?.,-",{x:0,y:40});
-    //drawString(""+player2.x+","+player2.y,{x:0,y:0});
-    //drawString("LURIDSORCERER",{x:32,y:32});
-    //drawString("OFFLINE",{x:32+24,y:40})
-    //drawString("PHYSICS!",{x:64,y:32});
-    drawString("POS "+player2.x+" "+player2.y,{x:0,y:0});
+    drawString("POS   "+player2.x+" "+player2.y,{x:0,y:0});
     drawString("SUBPX "+player2.subx+" "+player2.suby,{x:0,y:8});
     drawString("SPEED "+player2.speedx+" "+player2.speedy,{x:0,y:16});
 

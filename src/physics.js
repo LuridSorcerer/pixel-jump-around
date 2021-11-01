@@ -32,7 +32,7 @@ function checkBoxCollision(sprite, block) {
 
 }
 
-const MAX_SPEED_X = 24;
+const MAX_SPEED_X = 16;
 const MAX_SPEED_Y = 64;
 const SUBPIXELS = 16;
 
