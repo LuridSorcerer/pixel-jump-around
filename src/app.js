@@ -18,6 +18,9 @@ let font = [];
 // Create our level geometry, the parts of the level we can collide with.
 let geo = []; 
 
+// Store which screen we're currently displaying
+let board;
+
 // Create an offscreen canvas to draw to.
 // When the frame is finished we'll draw it to the onscreen canvas all at once.
 var o_canvas = document.createElement('canvas');
@@ -80,16 +83,6 @@ var player2 = {x:0,y:0,sprite:guy_tile,flip:false,
             // Switch the direction the player is facing depending on the direction button pressed. 
             if (controls.isDown(controls.KEY_A)) {player2.flip=true;}
             if (controls.isDown(controls.KEY_D)) {player2.flip=false;}
-
-            // if the sprite goes offscreen, wrap it to the other side
-            if (player2.x < -TILESIZE) {
-                player2.x = FAKESCREEN.width;
-            } else if (player2.x > FAKESCREEN.width) {
-                player2.x = -TILESIZE;
-            }
-
-            // wrap to the top if the sprite falls off
-            if (player2.y > 255) { player2.y = 0;}
         }
 };
 var frame_count = 0; 
@@ -133,6 +126,10 @@ function preRenderTiles(rawTiles,renderedTiles) {
 }
 
 function buildCollision(colData) {
+    // clear the collision geometry array 
+    geo.length = 0;
+
+    // build the collision data and save it
     for (let i=0; i<colData.length; i++) {
         if (colData[i] != 0) {
             let b = {x:(i%30)*8,y:(Math.floor(i/30)*8),h:TILESIZE,w:TILESIZE};
@@ -147,6 +144,7 @@ function init() {
     buildCollision(level1.collision);
     onResize();
     window.addEventListener('resize', onResize );
+    board = level1;
 }
 
 // drawTile() is for rendering sprites. 
@@ -192,7 +190,8 @@ function render() {
 
     // Draw the pre-rendered background tiles to the screen.
     for (let i=0; i<(30*18); i++) {
-        o_ctx.drawImage(tiles[level1.tiles[i]], (i%30)*8, Math.floor(i/30)*8);
+        //o_ctx.drawImage(tiles[level1.tiles[i]], (i%30)*8, Math.floor(i/30)*8);
+        o_ctx.drawImage(tiles[board.tiles[i]], (i%30)*8, Math.floor(i/30)*8);
     }
 
     // Draw the test sprite.
@@ -245,6 +244,20 @@ function update() {
     frame_count++;
     
     player2.update();
+
+    // if the sprite goes offscreen, wrap it to the other side and switch screens
+    if (player2.x < -TILESIZE) {
+        player2.x = FAKESCREEN.width;
+        board = level1;
+        buildCollision(level1.collision);
+    } else if (player2.x > FAKESCREEN.width) {
+        player2.x = -TILESIZE;
+        board = level2;
+        buildCollision(level2.collision);
+    }
+
+    // wrap to the top if the sprite falls off
+    if (player2.y > 255) { player2.y = 0;}    
 }
 
 function run() {
