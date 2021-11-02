@@ -145,6 +145,7 @@ function init() {
     onResize();
     window.addEventListener('resize', onResize );
     board = level1;
+    player2.x = 108; player2.y = 20;
 }
 
 // drawTile() is for rendering sprites. 
@@ -246,18 +247,18 @@ function update() {
     player2.update();
 
     // if the sprite goes offscreen, wrap it to the other side and switch screens
-    if (player2.x < -TILESIZE) {
-        player2.x = FAKESCREEN.width;
+    if (player2.x < 0) {
+        player2.x = FAKESCREEN.width-TILESIZE;
         board = level1;
         buildCollision(level1.collision);
-    } else if (player2.x > FAKESCREEN.width) {
-        player2.x = -TILESIZE;
+    } else if (player2.x+TILESIZE > FAKESCREEN.width) {
+        player2.x = 0;
         board = level2;
         buildCollision(level2.collision);
     }
 
     // wrap to the top if the sprite falls off
-    if (player2.y > 255) { player2.y = 0;}    
+    if (player2.y > FAKESCREEN.height) { player2.y = 0;}    
 }
 
 function run() {
