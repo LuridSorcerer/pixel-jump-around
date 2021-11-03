@@ -92,6 +92,7 @@ var colortest = false;
 var fonttest = false;
 var showcollision = false;
 var showgrid = false;
+var showposition = false;
 
 function onResize() {
     // Stretch the canvas to fill the entire window.
@@ -199,10 +200,14 @@ function render() {
     drawTile(player2.sprite,player2,player2.flip);
 
     // Draw some test text strings. 
-    drawString("POS   "+player2.x+" "+player2.y,{x:0,y:0});
-    drawString("SUBPX "+player2.subx+" "+player2.suby,{x:0,y:8});
-    drawString("SPEED "+player2.speedx+" "+player2.speedy,{x:0,y:16});
-    drawString("ONGROUND "+ (player2.onground ? 1 : 0), {x:0,y:24} );
+
+    // Show position debug info
+    if (showposition) {
+        drawString("POS   "+player2.x+" "+player2.y,{x:0,y:0});
+        drawString("SUBPX "+player2.subx+" "+player2.suby,{x:0,y:8});
+        drawString("SPEED "+player2.speedx+" "+player2.speedy,{x:0,y:16});
+        drawString("ONGROUND "+ (player2.onground ? 1 : 0), {x:0,y:24} );
+    }
 
     // Show collision
     if (showcollision) {
