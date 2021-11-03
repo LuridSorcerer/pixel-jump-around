@@ -211,9 +211,11 @@ function render() {
 
     // Show collision
     if (showcollision) {
-        o_ctx.fillStyle = "#FF0000";
-        for (let i=0; i<geo.length; i++) {
-            o_ctx.fillRect(geo[i].x,geo[i].y,geo[i].w,geo[i].h);
+        if (frame_count % 2 == 0) {
+            o_ctx.fillStyle = "#FF0000";
+            for (let i=0; i<geo.length; i++) {
+                o_ctx.fillRect(geo[i].x,geo[i].y,geo[i].w,geo[i].h);
+            }
         }
     }
 
