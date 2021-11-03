@@ -1,5 +1,10 @@
+const MAX_SPEED_X = 16;
+const MAX_SPEED_Y = 64;
+const SUBPIXELS = 16;
+
 function checkBoxCollision(sprite, block) {
 
+    // check if the two tiles are overlapping
     if (
         sprite.x < block.x  + block.w &&
         sprite.x + sprite.w > block.x && 
@@ -11,32 +16,27 @@ function checkBoxCollision(sprite, block) {
             sprite.y = block.y - sprite.h;
             sprite.speedy = 0;
             sprite.onground = true;
-        // If player was below the block last frame, put him under it.
-        } else if (sprite.lasty >= block.y + block.h) {
-            sprite.y = block.y + block.h;
-            sprite.speedy = 0;
         // If player was left of the block last frame, keep him to the left.
-        } else if (sprite.lastx + sprite.w <= block.x) {
+        }  else if (sprite.lastx + sprite.w <= block.x) {
             sprite.x = block.x - sprite.w
             sprite.speedx = 0;
         // If player was right of the block last frame, keep him to the right.
         } else if (sprite.lastx >= block.x + block.w) {
             sprite.x = block.x + block.w;
             sprite.speedx = 0;
+        // If player was below the block last frame, put him under it.
+        } else if (sprite.lasty >= block.y + block.h) {
+            sprite.y = block.y + block.h;
+            sprite.speedy = 0;
         }
-        
-
-    } else {
-
-    }
-
+    } else { }
 }
 
-const MAX_SPEED_X = 16;
-const MAX_SPEED_Y = 64;
-const SUBPIXELS = 16;
-
 function moveCharacter(character) {
+
+    // save previous frame position
+    character.lastx = character.x;
+    character.lasty = character.y;
 
     // is this a good place to constrain movement speed?
     if (character.speedx > MAX_SPEED_X) {character.speedx = MAX_SPEED_X; }
@@ -44,10 +44,6 @@ function moveCharacter(character) {
     
     if (character.speedy > MAX_SPEED_Y) {character.speedy = MAX_SPEED_Y; }
     else if (character.speedy < -MAX_SPEED_Y) {character.speedy = -MAX_SPEED_Y; }
-
-    // save previous frame position
-    character.lastx = character.x;
-    character.lasty = character.y;
 
     // apply movement speed to subpixels
     character.subx += character.speedx;
