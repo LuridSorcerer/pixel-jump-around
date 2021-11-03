@@ -145,7 +145,7 @@ function init() {
     onResize();
     window.addEventListener('resize', onResize );
     board = level1;
-    player2.x = 108; player2.y = 20;
+    player2.x = 50; player2.y = 100;
 }
 
 // drawTile() is for rendering sprites. 
