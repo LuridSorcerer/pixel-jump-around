@@ -1,3 +1,20 @@
+/*
+    Pixel Jump Around
+    Jump around. Jump around. Jump up, jump up, then jump down.
+
+    This is a pixel-style platform game written in a way that somewhat
+    mimics the graphical limitations and style of old 8-bit video game
+    systems. While not strictly adhering to these limits, it is 
+    intended to be stricly code; no image files are used, graphics are
+    generated at run-time. 
+
+    Goals:
+        * Impletment a state machine
+        * Create an actual game (levels, objectives, win-state, etc.)
+        * Audio (might be difficult/impossible)
+
+*/
+
 // Get the canvas and context so we can start drawing.
 var c = document.getElementById("c");
 var ctx = c.getContext('2d');
