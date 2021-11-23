@@ -16,8 +16,8 @@
 */
 
 // Get the canvas and context so we can start drawing.
-var c = document.getElementById("c");
-var ctx = c.getContext('2d');
+let c = document.getElementById("c");
+let ctx = c.getContext('2d');
 
 // Set up the fake screen, 30x18 tiles at 8x8px per tile
 const FAKESCREEN = {width:240, height:144};
@@ -40,13 +40,13 @@ let board;
 
 // Create an offscreen canvas to draw to.
 // When the frame is finished we'll draw it to the onscreen canvas all at once.
-var o_canvas = document.createElement('canvas');
+let o_canvas = document.createElement('canvas');
 o_canvas.width = FAKESCREEN.width;
 o_canvas.height = FAKESCREEN.height;
-var o_ctx = o_canvas.getContext('2d');
+let o_ctx = o_canvas.getContext('2d');
 
 // Set some testing variables.
-var player2 = {x:0,y:0,sprite:guy_tile,flip:false,
+let player2 = {x:0,y:0,sprite:guy_tile,flip:false,
     lastx:0,lasty:0, // position last frame
     w:8, h:8,
     posx:0, posy:0, // position, in pixels
@@ -102,14 +102,14 @@ var player2 = {x:0,y:0,sprite:guy_tile,flip:false,
             if (controls.isDown(controls.KEY_D)) {player2.flip=false;}
         }
 };
-var frame_count = 0; 
+let frame_count = 0; 
 
 // Create some debugging flags
-var colortest = false;
-var fonttest = false;
-var showcollision = false;
-var showgrid = false;
-var showposition = false;
+let colortest = false;
+let fonttest = false;
+let showcollision = false;
+let showgrid = false;
+let showposition = false;
 
 function onResize() {
     // Stretch the canvas to fill the entire window.
@@ -184,10 +184,10 @@ function drawTile(tile, where, flipped) {
 // drawMetaTile() draws sprites comprised of multiple tiles
 function drawMetaTile(tiles, where, flipped=false) {
     // how many blocks till will this metatile be? favor height over width
-    var mw = Math.floor(Math.sqrt(tiles.length));
-    var mh = Math.floor(tiles.length/mw);
+    let mw = Math.floor(Math.sqrt(tiles.length));
+    let mh = Math.floor(tiles.length/mw);
 
-    for (var i=0; i<tiles.length; i++) {
+    for (let i=0; i<tiles.length; i++) {
         if (flipped) {
             drawTile(tiles[i], {x:where.x+(((mw-1)*8)-(Math.floor(i/mh)*8)), y:where.y+((i%mh)*8) }, flipped);
         } else {
